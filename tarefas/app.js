@@ -1,3 +1,5 @@
+const idUsuario = localStorage.getItem('idUser')
+
 'use strict'
 
 const err = document.querySelector(".err");
@@ -36,14 +38,16 @@ taskInput.value = taskText;
 
 newLi.appendChild(taskInput);
 
+
+
 const botaodeletar = document.createElement("button");
-botaodeletar.innerText = "DELETAR";
+botaodeletar.innerText = "Excluir";
 botaodeletar.className = "botaodeletar";
 
 newLi.appendChild(botaodeletar);
 
 const botaoeditar = document.createElement("button");
-botaoeditar.innerText = "EDITAR";
+botaoeditar.innerText = "Editar";
 botaoeditar.className = "botaoeditar";
 
 newLi.appendChild(botaoeditar);
@@ -71,43 +75,42 @@ taskList.innerHTML = "";
 });
 
 
-// Para procurar as tarefas
-inputSearch.addEventListener('keyup', (e)=>{
-    e.preventDefault();
-
-const taskText = inputSearch.value.toLowerCase();
-
-const taskItens = document.querySelectorAll('.task');
-
-for(let i = 0; i < taskItens.length; i++){
-    const liTask = taskItens[i];
-
-const taskTextItem = liTask
-.querySelector(".disabled-task")
-.value.toLowerCase();
-
-if(taskTextItem.indexOf(searchText) !== -1){
-liTask.style.display = "block";
-}else{
-liTask.style.display = "none";
-}
-}
-});
 
 // Para editar as tarefas
 
-taskList.addEventListener("click", (e)=>{
-    e.preventDefault();
+async function finalizarEdicao(posicao, novoTexto, idTarefa) {
+    const userId = sessionStorage.getItem('userId')
+    const tarefaAtualizada = {
+        id: idTarefa,
+        tarefa: novoTexto,
+        concluida: minhaListaDeItens[posicao].concluida,
+        idUsuario: userId
+    }
 
-if(e.target.classList.contains("editBtn")){
+    try {
+        const response = await fetch(`http://127.0.0.1:5080/tarefas/${idTarefa}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tarefaAtualizada)
+        })
 
-const input = e.target.parentElement.querySelector(".disabled-task");
+        if (!response.ok) {
+            throw new Error('Erro ao atualizar tarefa')
+        }
 
-input.disabled = !input.disabled;
+        // Atualiza a tarefa na lista local
+        minhaListaDeItens[posicao].tarefa = novoTexto
 
-if(!input.disabled){
-    input.focus();
+        mostrarTarefas()
+    } catch (error) {
+        console.error('Erro ao atualizar tarefa:', error)
+    }
+
 }
 
-}
-});
+// comentar tarefas 
+
+
+

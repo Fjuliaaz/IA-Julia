@@ -1,28 +1,45 @@
-const button = document.getElementById('cadastrar')
 
-async function validarLogin(){
+async function CadastrarUsuarios() {
 
-    const nome = document.getElementById('usuario').value
-    const email = document.getElementById('email').value
-    const senha = document.getElementById('senha').value
 
-    if(nome === '' || email === '' || senha === ''){
-        alert('Preencha os Campos Corretamente....')
-    } else {
+    const nome = document.getElementById('nomeUsuario').value;
+    const email = document.getElementById('emailUsuario').value;
+    const senha = document.getElementById('senhaUsuario').value;
+    const premium = document.getElementById('isPremium').value
+    let statusCheckbox = isPremium.checked
+    try {
+        
 
-        const users = await fetch('http://localhost:5080/usuario') 
-        const listUsers = await users.json()
+        let statusBoolean = statusCheckbox ? true : false
+    
+        const perfil = {
+            nome: nome,
+            email: email,
+            senha: senha,
+            isPremium: statusBoolean
+        }
 
-        listUsers.forEach((user) => {
-            if(nome === user.nome && senha === user.senha && email === user.email){
-                alert('Usuário cadastrado com Sucesso !')
-                window.location.href = '../tarefas/anotacoes.htl'
-            }
-        })
+        console.log(perfil)
 
+        const url = 'http://127.0.0.1:5080/usuario'
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(perfil)
+        }  
+
+
+            await fetch(url, options)
+
+            alert("Cadastro com Sucesso !!");
+
+            window.location.href = "../tarefas/anotacoes.html"
+
+
+        }catch (error) {
+            console.error('Erro:', error);
+            alert("Erro ao Cadastrar !!");
+        }
     }
-}
-
-window.onload = () => {
-   button.addEventListener('Cadastrar', validarLogin)
-}

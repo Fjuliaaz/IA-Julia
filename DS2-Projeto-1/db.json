@@ -23,6 +23,12 @@
       "nome": "Julia",
       "email": " Julia@pereira.com",
       "senha": "juliamesmo"
+    },
+    {
+      "nome": "vidal",
+      "email": "vidal@gmail.com",
+      "senha": "1234567",
+      "id": 5
     }
   ],
   "tarefas": [
