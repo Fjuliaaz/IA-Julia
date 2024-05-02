@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #F5E6FC;
+}
+
+main{
+    height: 100vh;
+    width: 80vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+}
+
+.caixa{
+    width: 440px;
+    height: 60%;
+    background: #F5F5F5;
+    color: #8F5B98;
+    border-radius: 40px;
+    padding: 300px 100px;
+    border: 4px solid #8F5B98;
+
+}
+
+.caixa2{
+    height: 60%;
+    width: 440px;
+    background: #F5F5F5;
+    color: #8F5B98;
+    border-radius: 40px;
+    padding: 300px 100px;
+    border: 4px solid #8F5B98;
+
+}
+
+.button{
+    color: #8F5B98;
+}
